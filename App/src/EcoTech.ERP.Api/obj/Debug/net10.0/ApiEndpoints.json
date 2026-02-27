@@ -1,0 +1,68 @@
+[
+  {
+    "ContainingType": "EcoTech.ERP.Api.App.Routes\u002B\u003C\u003Ec",
+    "Method": "\u003CUsuariosEndpoints\u003Eb__2_0",
+    "RelativePath": "api/usuarios/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "EcoTech.ERP.Api.App.Common.Responses.ApiResponse\u00601[[System.Collections.Generic.List\u00601[[EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs.UsuariosDto, EcoTech.ERP.Enterprise, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "EcoTech.ERP.Api.App.Routes\u002B\u003C\u003Ec",
+    "Method": "\u003CUsuariosEndpoints\u003Eb__2_2",
+    "RelativePath": "api/usuarios/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "EcoTech.ERP.Enterprise.Application.Features.Usuarios.Commands.AddUsuarioCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "EcoTech.ERP.Api.App.Common.Responses.ApiResponse\u00601[[EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs.UsuariosDto, EcoTech.ERP.Enterprise, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "EcoTech.ERP.Api.App.Routes\u002B\u003C\u003Ec",
+    "Method": "\u003CUsuariosEndpoints\u003Eb__2_1",
+    "RelativePath": "api/usuarios/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "EcoTech.ERP.Api.App.Common.Responses.ApiResponse\u00601[[EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs.UsuariosDto, EcoTech.ERP.Enterprise, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

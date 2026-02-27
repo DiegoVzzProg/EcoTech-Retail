@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/memoria/" />
+  <Folder Name="/modules/">
+    <Project Path="modules/EcoTech.ERP.Enterprise/EcoTech.ERP.Enterprise.csproj" Id="11ccb1da-d9c9-4bba-9f17-42d8379d6ee4" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/EcoTech.ERP.Api/EcoTech.ERP.Api.csproj" Id="c1500535-046c-4b52-b7a7-01e40870cf39" />
+    <Project Path="src/EcoTech.ERP.Web/EcoTech.ERP.Web.Client/EcoTech.ERP.Web.Client.csproj" Id="0796a0f2-b9f9-476c-87a6-3351524225ed" />
+    <Project Path="src/EcoTech.ERP.Web/EcoTech.ERP.Web/EcoTech.ERP.Web.csproj" Id="1d698284-0668-4e55-b3b0-675eaf443998" />
+  </Folder>
+</Solution>
