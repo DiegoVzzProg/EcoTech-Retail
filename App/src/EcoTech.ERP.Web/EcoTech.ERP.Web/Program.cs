@@ -1,5 +1,6 @@
 using EcoTech.ERP.Web.Client.Pages;
 using EcoTech.ERP.Web.Components;
+using EcoTech.ERP.Web.Client.Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7275/api/")
+});
+
+builder.Services.AddAllServices();
 
 var app = builder.Build();
 

@@ -1,0 +1,42 @@
+﻿@* DataGrid.razor *@
+@typeparam TItem
+
+<div class="overflow-hidden rounded-xl border border-slate-800 bg-[#161b22]">
+    <table class="w-full text-left text-sm text-slate-300">
+        <thead class="bg-[#1c2128] text-xs font-semibold uppercase text-slate-400">
+            <tr>
+                @HeaderContent
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800">
+            @if (Items != null && Items.Any())
+            {
+                @foreach (var item in Items)
+                {
+                    <tr class="transition-colors hover:bg-slate-800/30">
+                        @RowTemplate(item)
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="100" class="px-6 py-10 text-center text-slate-500 italic">
+                        No se encontraron registros.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IEnumerable<TItem> Items { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public RenderFragment HeaderContent { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public RenderFragment<TItem> RowTemplate { get; set; } = default!;
+}

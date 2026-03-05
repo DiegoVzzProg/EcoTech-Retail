@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using EcoTech.ERP.Api.App.Common.Responses;
+using EcoTech.Shared.Common.Responses;
 using EcoTech.ERP.Api.App.Interfaces;
 using EcoTech.ERP.Api.App.Services;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.Commands;

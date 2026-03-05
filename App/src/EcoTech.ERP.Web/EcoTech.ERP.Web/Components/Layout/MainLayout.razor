@@ -1,6 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<div class="h-screen w-screen flex flex-col bg-[#101922] text-gray-200 overflow-hidden font-sans">
+    <Header />
+    <div class="flex flex-1 overflow-hidden">
+        <SidebarMenu />
+        <main class="flex-1 overflow-y-auto p-8">
+            @Body
+        </main>
+    </div>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.

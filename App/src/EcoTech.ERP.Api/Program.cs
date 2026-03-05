@@ -21,11 +21,23 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
 builder.Services.AddAllServices();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://ecotech-erp-web.dev.localhost:7137", "http://ecotech-erp-web.dev.localhost:5062")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 #endregion
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
+
 app.MapControllers();
 app.Endpoints();
 

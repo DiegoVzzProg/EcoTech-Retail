@@ -1,4 +1,4 @@
-﻿using EcoTech.ERP.Api.App.Common.Responses;
+﻿using EcoTech.Shared.Common.Responses;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.Commands;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs;
 using MediatR;

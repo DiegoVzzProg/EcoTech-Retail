@@ -1,4 +1,4 @@
-﻿using EcoTech.ERP.Api.App.Common.Responses;
+﻿using EcoTech.Shared.Common.Responses;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace EcoTech.ERP.Api.App.Exceptions

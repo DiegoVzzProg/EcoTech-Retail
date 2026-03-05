@@ -1,0 +1,120 @@
+@page "/usuarios"
+@rendermode InteractiveAuto
+
+@using EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs
+@using EcoTech.ERP.Web.Client.Components.DataGrid
+@using EcoTech.ERP.Web.Client.Services.Interfaces
+
+@inject IUsuarioService _usuarioService
+
+<PageTitle>Usuarios - EcoTech ERP</PageTitle>
+
+<div class="flex flex-col h-full">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1">
+                <span>Organización</span>
+                <span>/</span>
+                <span class="text-gray-200 font-medium">Usuarios</span>
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">Gestión de Usuarios</h1>
+            <p class="text-gray-400 mt-1 text-sm">Configura los accesos y roles para los miembros.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="px-4 py-2 flex items-center gap-2 bg-[#1b2735] hover:bg-gray-700 text-gray-200 text-sm font-medium rounded border border-gray-600 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                Exportar
+            </button>
+            <button class="px-4 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded transition-colors shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Crear Usuario
+            </button>
+        </div>
+    </div>
+    
+    <div class="flex-1 bg-[#161f2b] border border-gray-700 rounded-lg p-6 flex flex-col text-gray-500">
+        @if (UsuariosData == null)
+        {
+            <div class="text-slate-400 animate-pulse">Cargando datos del servidor...</div>
+        }
+        else
+        {
+            <DataGrid Items="@UsuariosData" Context="usuario" @rendermode="InteractiveAuto">
+                <HeaderContent>
+                    <th class="px-6 py-4">Usuario</th>
+                    <th class="px-6 py-4">Email</th>
+                    <th class="px-6 py-4">Rol</th>
+                    <th class="px-6 py-4">Active</th>
+                    <th class="px-6 py-4">Fecha</th>
+                    <th class="px-6 py-4 text-right">Acciones</th>
+                </HeaderContent>
+                <RowTemplate>
+                    <td class="px-6 py-4 font-medium text-white">
+                        <div class="flex items-center gap-2">
+                            @GetIconProfile(usuario.username)
+                            @usuario.username
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-slate-300">@usuario.email</td>
+                    <td class="px-6 py-4 text-slate-300">
+                        @GetRoleDesign(usuario.role_name)
+                    </td>
+                    <td class="px-6 py-4">
+                        @if (usuario.active)
+                        {
+                            <span class="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400 border border-green-500/20">
+                                Activo
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-400 border border-red-500/20">
+                                Inactivo
+                            </span>
+                        }
+                    </td>
+                    <td class="px-6 py-4 text-slate-300">@usuario.created_at.ToString("yyy-MM-dd HH:mm:ss")</td>
+                    <td class="px-6 py-4 text-right">
+                        <button class="text-slate-400 hover:text-blue-400 transition-colors mr-3">Editar</button>
+                        <button class="text-slate-400 hover:text-red-400 transition-colors">Borrar</button>
+                    </td>
+                </RowTemplate>
+            </DataGrid>
+        }
+    </div>
+</div>
+
+@code {
+    private List<UsuariosDto> UsuariosData = new();
+    private string[] profile = new string[]
+    {
+        "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20",
+        "bg-violet-500/10 text-violet-400 border border-violet-500/20",
+        "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+    };
+
+    private int randomValue = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _usuarioService.GetAllAsync();
+        UsuariosData = response.data;
+
+        var random = new Random();
+        int value = random.Next(0, profile.Length);
+    }
+
+    private MarkupString GetIconProfile(string username)
+    {
+        string primeraLetra = username[0].ToString().Trim().ToUpper();
+        string ultimaLetra = username[^1].ToString().Trim().ToUpper();
+
+        string icon = @$"<span class=""rounded-full {profile[randomValue]} size-8 flex items-center justify-center font-semibold select-none p-2"">{primeraLetra}{ultimaLetra}</span>";
+
+        return (MarkupString)icon;
+    }
+
+    private MarkupString GetRoleDesign(string rol)
+     => (MarkupString)@$"<span class=""uppercase text-xs rounded-full {profile[randomValue]} text-center px-2.5 py-0.5"">{rol}</span>";
+    
+}

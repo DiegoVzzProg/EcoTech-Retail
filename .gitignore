@@ -8,3 +8,7 @@ App/src/EcoTech.ERP.Web/EcoTech.ERP.Web.Client/bin
 App/src/EcoTech.ERP.Web/EcoTech.ERP.Web.Client/obj
 App/src/EcoTech.ERP.Web/EcoTech.ERP.Web.Client/node_modules
 App/src/EcoTech.ERP.Web/EcoTech.ERP.Web/obj
+App/src/EcoTech.Shared/obj
+App/src/EcoTech.ERP.Api/obj
+App/src/EcoTech.Shared/bin
+App/src/EcoTech.ERP.Api/obj

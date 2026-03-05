@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Features\Usuarios\DTOs\" />
     <Folder Include="Application\Interfaces\" />
     <Folder Include="Application\Behaviors\" />
     <Folder Include="Domain\Exceptions\" />
@@ -26,6 +27,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EcoTech.Shared\EcoTech.Shared.csproj" />
   </ItemGroup>
 
 </Project>
