@@ -3,32 +3,30 @@
 
 @using EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs
 @using EcoTech.ERP.Web.Client.Components.DataGrid
+@using EcoTech.ERP.Web.Client.Components.UI
 @using EcoTech.ERP.Web.Client.Services.Interfaces
+@using System.Text.RegularExpressions
 
 @inject IUsuarioService _usuarioService
 
-<PageTitle>Usuarios - EcoTech ERP</PageTitle>
+<PageTitle>Usuarios</PageTitle>
 
-<div class="flex flex-col h-full">
-    <div class="flex items-center justify-between mb-6">
+<div class="flex flex-col h-full overflow-x-hidden">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-[1rem]">
         <div>
-            <div class="flex items-center gap-2 text-sm text-gray-400 mb-1">
-                <span>Organización</span>
-                <span>/</span>
-                <span class="text-gray-200 font-medium">Usuarios</span>
-            </div>
-            <h1 class="text-2xl font-bold text-white tracking-tight">Gestión de Usuarios</h1>
-            <p class="text-gray-400 mt-1 text-sm">Configura los accesos y roles para los miembros.</p>
+            <PageHeader Titulo="Gestión de Usuarios" Description="Configura los accesos y roles para los miembros."
+                        Breadcrumbs="Usuarios"></PageHeader>
         </div>
         <div class="flex items-center gap-3">
-            <button class="px-4 py-2 flex items-center gap-2 bg-[#1b2735] hover:bg-gray-700 text-gray-200 text-sm font-medium rounded border border-gray-600 transition-colors">
+            <button class="max-lg:w-full px-4 py-2 flex max-lg:justify-center items-center gap-2 bg-[#1b2735] hover:bg-gray-700 text-gray-200 text-sm font-medium rounded border border-gray-600 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                Exportar
+                <span>Exportar</span>
             </button>
-            <button class="px-4 py-2 flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded transition-colors shadow-sm">
+            <NavLink href="/usuarios/crear" 
+                     class="max-lg:w-full px-4 py-2 flex max-lg:justify-center items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded transition-colors shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                Crear Usuario
-            </button>
+                <span>Crear Usuario</span>
+            </NavLink>
         </div>
     </div>
     
@@ -39,46 +37,61 @@
         }
         else
         {
-            <DataGrid Items="@UsuariosData" Context="usuario" @rendermode="InteractiveAuto">
+            <DataGrid Items="@UsuariosData" Context="usuario" @rendermode="InteractiveAuto"
+                      SearchPredicate="(user, term) => user.username.Contains(term, StringComparison.OrdinalIgnoreCase) || user.email.Contains(term, StringComparison.OrdinalIgnoreCase)">
                 <HeaderContent>
-                    <th class="px-6 py-4">Usuario</th>
-                    <th class="px-6 py-4">Email</th>
-                    <th class="px-6 py-4">Rol</th>
-                    <th class="px-6 py-4">Active</th>
-                    <th class="px-6 py-4">Fecha</th>
-                    <th class="px-6 py-4 text-right">Acciones</th>
+                    <th class="px-6 py-4 font-normal">Usuario</th>
+                    <th class="px-6 py-4 font-normal hidden lg:table-cell">Email</th>
+                    <th class="px-6 py-4 font-normal">Rol</th>
+                    <th class="px-6 py-4 font-normal">Estado</th>
+                    <th class="px-6 py-4 text-right font-normal">Acciones</th>
                 </HeaderContent>
                 <RowTemplate>
                     <td class="px-6 py-4 font-medium text-white">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center justify-start gap-2">
                             @GetIconProfile(usuario.username)
                             @usuario.username
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-slate-300">@usuario.email</td>
+                    <td class="px-6 py-4 text-slate-300 hidden lg:table-cell">@TruncateEmail(usuario.email)</td>
                     <td class="px-6 py-4 text-slate-300">
                         @GetRoleDesign(usuario.role_name)
                     </td>
                     <td class="px-6 py-4">
                         @if (usuario.active)
                         {
-                            <span class="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400 border border-green-500/20">
+                            <span class="inline-flex items-center rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs text-green-400 border border-green-500/20">
                                 Activo
                             </span>
                         }
                         else
                         {
-                            <span class="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-400 border border-red-500/20">
+                            <span class="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs text-red-400 border border-red-500/20">
                                 Inactivo
                             </span>
                         }
                     </td>
-                    <td class="px-6 py-4 text-slate-300">@usuario.created_at.ToString("yyy-MM-dd HH:mm:ss")</td>
-                    <td class="px-6 py-4 text-right">
-                        <button class="text-slate-400 hover:text-blue-400 transition-colors mr-3">Editar</button>
-                        <button class="text-slate-400 hover:text-red-400 transition-colors">Borrar</button>
+                    <td class="px-6 py-4 text-center">
+                        <button class="text-slate-400 hover:text-blue-400 transition-colors mr-3">
+                            Editar
+                        </button>
+                        <button class="text-slate-400 hover:text-red-400 transition-colors">
+                            Borrar
+                        </button>
                     </td>
                 </RowTemplate>
+                <ExpandedRowTemplate Context="usuarioDetail">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+                        <div>
+                            <span class="text-white block text-xs uppercase tracking-wider mb-1">Email de contacto:</span>
+                            <span class="text-gray-400">@usuarioDetail.email</span>
+                        </div>
+                        <div>
+                            <span class="text-white block text-xs uppercase tracking-wider mb-1">Fecha de creación:</span>
+                            <span class="text-gray-400">@usuarioDetail.created_at.ToString("dd MMM yyyy, HH:mm")</span>
+                        </div>
+                    </div>
+                </ExpandedRowTemplate>
             </DataGrid>
         }
     </div>
@@ -114,7 +127,13 @@
         return (MarkupString)icon;
     }
 
+    private MarkupString TruncateEmail(string email)
+    {
+        string clean = @$"<span title='{email}'>{email.Substring(0, 4)}...</span>";
+        return (MarkupString)clean;
+    }
+
     private MarkupString GetRoleDesign(string rol)
-     => (MarkupString)@$"<span class=""uppercase text-xs rounded-full {profile[randomValue]} text-center px-2.5 py-0.5"">{rol}</span>";
+     => (MarkupString)@$"<span class=""uppercase text-xs rounded-full {profile[randomValue]} px-2.5 py-0.5 w-full flex text-[clamp(.85rem,3vw,1rem)] justify-center truncate w-full max-w-[70px]"">{rol}</span>";
     
 }

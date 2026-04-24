@@ -1,6 +1,6 @@
 [
   {
-    "Name": "Nuevo perfil",
+    "Name": "Sin depurar Front",
     "Projects": [
       {
         "Path": "src\\EcoTech.ERP.Api\\EcoTech.ERP.Api.csproj",
@@ -9,7 +9,37 @@
       },
       {
         "Path": "src\\EcoTech.ERP.Web\\EcoTech.ERP.Web\\EcoTech.ERP.Web.csproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "https"
+      }
+    ]
+  },
+  {
+    "Name": "Depurar Front",
+    "Projects": [
+      {
+        "Path": "src\\EcoTech.ERP.Api\\EcoTech.ERP.Api.csproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\EcoTech.ERP.Web\\EcoTech.ERP.Web\\EcoTech.ERP.Web.csproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "https"
+      }
+    ]
+  },
+  {
+    "Name": "Depurar Api",
+    "Projects": [
+      {
+        "Path": "src\\EcoTech.ERP.Api\\EcoTech.ERP.Api.csproj",
         "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "src\\EcoTech.ERP.Web\\EcoTech.ERP.Web\\EcoTech.ERP.Web.csproj",
+        "Action": "StartWithoutDebugging",
         "DebugTarget": "https"
       }
     ]

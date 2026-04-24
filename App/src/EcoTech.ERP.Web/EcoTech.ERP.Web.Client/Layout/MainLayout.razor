@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<div class="h-screen w-screen flex flex-col bg-[#101922] text-gray-200 overflow-hidden font-sans">
+    <Header />
+    <div class="flex justify-center overflow-hidden flex-1">
+        <div class="flex flex-1 max-w-[1440px] overflow-hidden">
+            <SidebarMenu />
+            <main class="flex-1 overflow-y-auto p-8">
+                @Body
+            </main>
+        </div>
+    </div>
+</div>
+
+<div id="blazor-error-ui" class="hidden fixed bottom-0 left-0 w-full z-[1000] bg-red-900/90 backdrop-blur-sm text-white px-5 py-3 shadow-lg border-t border-red-700" data-nosnippet>
+    <div class="flex items-center justify-between max-w-[1440px] mx-auto">
+        <div class="flex items-center gap-4">
+            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>Ha ocurrido un error inesperado en la aplicación.</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="." class="reload text-red-200 hover:text-white underline text-sm font-medium transition-colors">Recargar página</a>
+            <span class="dismiss cursor-pointer p-1 hover:bg-red-800 rounded transition-colors text-red-300 hover:text-white" title="Cerrar">🗙</span>
+        </div>
+    </div>
+</div>

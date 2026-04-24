@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
-using EcoTech.Shared.Common.Responses;
 using EcoTech.ERP.Api.App.Interfaces;
 using EcoTech.ERP.Api.App.Services;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.Commands;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs;
 using EcoTech.ERP.Enterprise.Application.Features.Usuarios.Queries;
+using EcoTech.Shared.Common.Responses;
+using EcoTech.Shared.DTOs.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,17 @@ namespace EcoTech.ERP.Api.App
             
             group.MapGet($"{groupRoute}/{{id}}", ([FromServices] IUsuariosService service, Guid id) => service.GetByIdUsuario(id));
 
-            group.MapPost($"{groupRoute}/", ([FromServices] IUsuariosService service, [FromBody] AddUsuarioCommand command) => service.CreateUsuario(command));
+            group.MapPost($"{groupRoute}/", async ([FromServices] IUsuariosService service, [FromBody] AddUsuarioRequest request) =>
+            {
+                var command = new AddUsuarioCommand(
+                    request.Username,
+                    request.Email,
+                    request.Password,
+                    request.RoleId
+                );
+
+                return await service.CreateUsuario(command);
+            });
         }
     }
 }

@@ -6,9 +6,6 @@ namespace EcoTech.ERP.Web.Client.Services.Common
     {
         public Task<ApiResponse<List<T>>> GetAllAsync();
         public Task<ApiResponse<T>> GetByIdAsync(string id);
-
-        public Task CreateAsync(T entity);
-
         public Task DeleteAsync(string id);
     }
 }

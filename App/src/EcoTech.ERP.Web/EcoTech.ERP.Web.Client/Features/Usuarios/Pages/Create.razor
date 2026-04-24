@@ -1,0 +1,61 @@
+﻿@page "/usuarios/crear"
+@rendermode InteractiveAuto
+
+@using EcoTech.ERP.Enterprise.Application.Features.Usuarios.DTOs
+@using EcoTech.ERP.Web.Client.Components.Forms
+@using EcoTech.ERP.Web.Client.Components.UI
+@using EcoTech.ERP.Web.Client.Services.Interfaces
+@using EcoTech.Shared.DTOs.Request
+
+@inject IUsuarioService _usuarioService
+
+<PageTitle>Usuarios</PageTitle>
+<div class="flex flex-col h-full">
+	<div class="flex items-center justify-between mb-6">
+        <div>
+            <PageHeader Titulo="Captura de Usuarios" Description="Registrar un nuevo usuario en el sistema"
+                        Breadcrumbs="Usuarios|Crear"></PageHeader>
+        </div>
+	</div>
+
+    <EcotechForm TModel="AddUsuarioRequest"
+                 Model="@miModelo" 
+                 Mode="@modoActual" 
+                 OnValidSubmit="ProcesarFormulario"
+                 AditionalTextForButton="Usuario" LinkForToBackButton="/usuarios">
+        
+        <EcotechInput @bind-Value="miModelo.Username" 
+                      Label="Nombre de Usuario" 
+                      Placeholder="diego.admin" ValidationFor="()=> miModelo.Username" />
+
+        <EcotechInput @bind-Value="miModelo.Email" 
+                      Label="Correo Electrónico" 
+                      Type="EcotechInput.InputMode.Email"
+                      ValidationFor="() => miModelo.Email" />
+
+        <EcotechInput @bind-Value="miModelo.Password" 
+                      Label="Contraseña" 
+                      Type="EcotechInput.InputMode.Password"
+                      ValidationFor="() => miModelo.Password" />
+
+    </EcotechForm>
+</div>
+@code {
+    private AddUsuarioRequest miModelo = new();
+
+    private EcotechForm<AddUsuarioRequest>.FormMode modoActual = EcotechForm<AddUsuarioRequest>.FormMode.Add;
+
+    private async Task ProcesarFormulario(AddUsuarioRequest modeloCapturado)
+    {
+        if (modoActual == EcotechForm<AddUsuarioRequest>.FormMode.Add)
+        {
+            var response = await _usuarioService.CreateAsync(modeloCapturado);
+
+            if (!response.success) return;
+        }
+        else
+        {
+            Console.WriteLine($"Editando a: {modeloCapturado.Username}");
+        }
+    }
+}

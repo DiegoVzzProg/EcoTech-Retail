@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Common\" />
-    <Folder Include="Components\Forms\" />
-    <Folder Include="Components\UI\" />
     <Folder Include="Services\Handlers\" />
     <Folder Include="Shared\" />
   </ItemGroup>
@@ -25,8 +23,8 @@
     <ProjectReference Include="..\..\EcoTech.Shared\EcoTech.Shared.csproj" />
   </ItemGroup>
 
-<Target Name="TailwindBuild" BeforeTargets="Build">
-	<Message Importance="high" Text="Compilando estilos de Tailwind CSS..." />
-	<Exec Command="npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css" />
-</Target>
+    <Target Name="TailwindBuild" BeforeTargets="Build">
+	    <Message Importance="high" Text="Compilando estilos de Tailwind CSS..." />
+	    <Exec Command="npx tailwindcss -i ./wwwroot/css/app.css -o ./wwwroot/css/app.min.css" />
+    </Target>
 </Project>

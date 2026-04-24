@@ -2,11 +2,13 @@
 
 <div class="h-screen w-screen flex flex-col bg-[#101922] text-gray-200 overflow-hidden font-sans">
     <Header />
-    <div class="flex flex-1 overflow-hidden">
-        <SidebarMenu />
-        <main class="flex-1 overflow-y-auto p-8">
-            @Body
-        </main>
+    <div class="flex justify-center overflow-hidden flex-1">
+        <div class="flex flex-1 justify-center max-w-[100px]">
+            <SidebarMenu />
+            <main class="flex-1 overflow-y-auto p-8 max-w-2xl">
+                @Body
+            </main>
+        </div>
     </div>
 </div>
 

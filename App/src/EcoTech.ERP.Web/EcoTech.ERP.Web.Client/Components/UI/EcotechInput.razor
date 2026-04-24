@@ -1,0 +1,61 @@
+﻿@using System.Linq.Expressions
+@inherits InputBase<string>
+
+<div class="flex flex-col w-full mb-4">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label class="block text-xs font-bold uppercase text-gray-500 tracking-widest mb-2 ml-1">
+            @Label
+        </label>
+    }
+
+    <div class="relative group">
+        @if (Icon != null)
+        {
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-blue-500 transition-colors">
+                @Icon
+            </div>
+        }
+
+        <input type="@Type.ToString().ToLower()"
+               class="w-full bg-[#1b2735] border border-gray-700 text-sm text-white rounded-lg py-2.5
+                      @(Icon != null ? "pl-10" : "pl-4") pr-4
+                      focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500
+                      transition-all placeholder-gray-500 hover:border-gray-600"
+               placeholder="@Placeholder"
+               value="@CurrentValue"
+               @oninput="OnInputChanged" />
+    </div>
+
+    <ValidationMessage For="@ValidationFor" class="mt-1 text-xs text-red-400 ml-1" />
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
+    [Parameter] public InputMode Type { get; set; } = InputMode.Text;
+    [Parameter] public RenderFragment? Icon { get; set; }
+    [Parameter] public Expression<Func<string>>? ValidationFor { get; set; }
+
+    private void OnInputChanged(ChangeEventArgs e)
+    {
+        CurrentValueAsString = e.Value?.ToString();
+    }
+
+    public enum InputMode
+    {
+        Text,
+        Password,
+        Email,
+        Number,
+        Tel
+    }
+
+    // Necesario para extender InputBase
+    protected override bool TryParseValueFromString(string? value, out string result, out string? validationErrorMessage)
+    {
+        result = value ?? "";
+        validationErrorMessage = null;
+        return true;
+    }
+}
